@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +14,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('register', [AuthController::class, 'create'])->name('register');
+Route::post('register', [AuthController::class, 'store']);
+Route::get('admin', [AuthController::class, 'admin'])->name('admin');
+Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// ログアウト
+Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
